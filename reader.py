@@ -11,7 +11,7 @@ def search_word(word):
     page = requests.get(url.format(word=word))
     soup = BeautifulSoup(page.content, "html.parser")
     sol = ()
-    related_message = soup.find(text=f'Entradas que contienen la forma «{word}»:')
+    related_message = soup.find(text=re.compile(r'Entrada(s)* que contiene(n)* la(s)* forma(s)*(\W{2}\w*)+\S:'))
 
     if soup.find(text="Aviso: ") or related_message:
         if soup.find(text=re.compile(r'La(s)* entrada(s)* que se muestra(n)* a continuación podría(n)* estar relacionada(s)*:')) or related_message:
