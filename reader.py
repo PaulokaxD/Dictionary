@@ -21,7 +21,7 @@ def search_word(word):
             else:
                 possible_words = soup.select(".item-list a")
             for possible_word in possible_words:
-                print('          ',possible_word.text)
+                print(f"{possible_word.text: ^35}")
             
             if input("\n¿Te referias a alguna de ellas? si/otro\n") == 'si':
                 sol = search_word(input('Introduzca la palabra:'))
@@ -39,15 +39,15 @@ def search_word(word):
                 if(input('\n¿Quiere añadir esta entrada?si/otro ') == 'si'):
                     val_meaning[i] = meaning_text
 
-            for i,meaning in enumerate(entry.find_all('p', class_='l2'), start=len(val_meaning)+1):
+            l2 = entry.find_all('p', class_='l2')
+            for i,meaning in enumerate(l2, start=len(val_meaning)+1):
                 meaning_text = meaning.text
                 print(meaning_text)
                 if(input('\n¿Quiere añadir esta entrada?si/otro ') == 'si'):
                     val_meaning[i] = meaning_text
 
             expressions_name = entry.find_all("p", class_=re.compile(r"^k[1-9]?$"))
-            expressions_info = entry.find_all("p", class_='m') 
-            expressions_info.extend(entry.find_all('p', class_='l2'))
+            expressions_info = entry.find_all("p", class_='m') + l2
 
             longitude = len(expressions_info)
             if longitude == len(expressions_name):
@@ -98,7 +98,7 @@ def search_word(word):
         possible_words = soup.select(".otras a")
         print('\nQuizas te interesen estas palabras relacionadas:')
         for possible_word in possible_words:
-                print('          ',possible_word.text)
+                print(f"{possible_word.text: ^45}")
     return sol
 
 
