@@ -71,7 +71,7 @@ def search_word(word):
                         name_text = expressions_name[a].text
                         print(name_text, info_text)
                         if(input('\n¿Quiere añadir esta entrada?si/otro ') == 'si'):
-                            if(val_meaning.get(name_text) is None):
+                            if name_text in val_meaning:
                                 val_meaning[name_text] = [info_text]
                             else:
                                 val_meaning[name_text].append(info_text)
@@ -105,11 +105,11 @@ def search_word(word):
 
 
 def record_word(word, file):
-    if os.stat(f"{file}.json").st_size == 0:
-            with open(f"{file}.json", "r+",encoding="utf-8") as empty_file:
-                empty_file.write('{}')
-    with open(f"{file}.json", "r+",encoding="utf-8") as read_file:
-        dictionary = json.load(read_file)
+    if not os.path.isfile(f'{file}.json') or os.stat(f'{file}.json').st_size == 0:
+        dictionary = {}
+    else:
+        with open(f'{file}.json', encoding='utf-8') as read_file:
+            dictionary = json.load(read_file)
     res = search_word(word)
     if res:
         if res[0] not in dictionary or (res[0] in dictionary and input(f"\n¿Quieres reescribir la entrada {res[0]}? si/otro\n") == "si"):
