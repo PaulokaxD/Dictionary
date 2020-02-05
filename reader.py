@@ -48,12 +48,12 @@ def search_word(word):
 
             expressions_name = entry.find_all("p", class_=re.compile(r"^k[1-9]?$"))
             expressions_info = entry.find_all("p", class_='m') + l2
-
             longitude = len(expressions_info)
+            
             if longitude == len(expressions_name):
-                for a in range(longitude):
-                    expressions_name_text = expressions_name[a].text
-                    expressions_info_text = expressions_info[a].text
+                for expression_name, expression_info in zip(expressions_name,expressions_info):
+                    expressions_name_text = expression_name.text
+                    expressions_info_text = expression_info.text
                     print(expressions_name_text,expressions_info_text)
                     if(input('\n¿Quiere añadir esta entrada?si/otro ') == 'si'):
                         val_meaning[expressions_name_text] = expressions_info_text
@@ -78,8 +78,8 @@ def search_word(word):
                                 
             other_entrys = entry.find_all("p", class_=re.compile(r"^l3?$"))
             other_entrys_text = []
-            for i in range(len(other_entrys)):
-                other_entry_text = other_entrys[i].text
+            for other_entry in other_entrys: 
+                other_entry_text = other_entry.text 
                 print(other_entry_text)
                 if(input('\n¿Quiere añadir esta entrada?si/otro ') == 'si'):
                     other_entrys_text.append(other_entry_text)
@@ -88,11 +88,13 @@ def search_word(word):
 
             if val_meaning:
                 dict_meaning[k] = val_meaning
+                
         if dict_meaning:
             sol = (word,dict_meaning)
             print('\nSe ha añadido correctamente')
         else:
             print(f'\nNo se ha guardado información sobre la palabra "{word}"')
+            
     other_words = soup.find(text=re.compile(r'Otra(s)* entrada(s)* que contiene(n)* la(s)* forma(s)*(\W{2}\w*)+\S:'))
     if other_words:
         possible_words = soup.select(".otras a")
@@ -134,4 +136,4 @@ def copy_dictionary(file_dict,new_file):
 if __name__ == "__main__":
     # word = input("\n¿Que palabra desea buscar? ")
     # record_word(word, "dict_file")
-    copy_dictionary('dict_file','dict_copy')
+    # copy_dictionary('dict_file','dict_copy')
