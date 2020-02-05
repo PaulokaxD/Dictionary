@@ -82,7 +82,7 @@ def search_word(word):
                 other_entry_text = other_entrys[i].text
                 print(other_entry_text)
                 if(input('\n¿Quiere añadir esta entrada?si/otro ') == 'si'):
-                    other_entrys_text.append(other_entrys[i].text)
+                    other_entrys_text.append(other_entry_text)
             if other_entrys_text:
                 val_meaning['otras entradas'] = other_entrys_text
 
