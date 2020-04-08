@@ -1,0 +1,6 @@
+.vscode 
+__*
+*.json
+other.py
+main.py
+sin_preguntas.py
